@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/character_provider.dart';
 import 'package:simple_init_tracker/models/character.dart';
+import 'package:simple_init_tracker/ui/pages/parties_page.dart';
 import 'package:simple_init_tracker/ui/widgets/add_character_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/character_tile.dart';
 
@@ -48,7 +49,14 @@ class MainPage extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.group),
               title: const Text('Adventurers'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PartiesPage(),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.add_card_sharp),
