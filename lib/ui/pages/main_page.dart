@@ -24,6 +24,50 @@ class MainPage extends ConsumerWidget {
     final characters = ref.watch(characterProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Initiative Tracker'),
+        actions: [
+          if (characters.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                ref.read(characterProvider.notifier).clearCharacters();
+              },
+            ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text('Drawer Header',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.group),
+              title: const Text('Adventurers'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.add_card_sharp),
+              title: const Text('Monsters'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       body: characters.isEmpty
           ? Center(
               child: Text(
