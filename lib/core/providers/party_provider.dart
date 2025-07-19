@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/models/party.dart';
 
 class PartyNotifier extends StateNotifier<List<Party>> {
@@ -13,15 +14,33 @@ class PartyNotifier extends StateNotifier<List<Party>> {
     state = [...state, party];
   }
 
-  void removeParty(Party party) {
-    state = state.where((p) => p != party).toList();
+  void removeParty(String id) {
+    state = state.where((party) => party.id != id).toList();
   }
 
   void clearParties() {
     state = [];
   }
+
+  void addCharacterToParty(Party party, Character character) {
+    final updatedParty = Party(
+      id: party.id,
+      name: party.name,
+      characters: [...party.characters, character],
+    );
+    state = state.map((p) => p == party ? updatedParty : p).toList();
+  }
+
+  void removeCharacterFromParty(Party party, Character character) {
+    final updatedParty = Party(
+      id: party.id,
+      name: party.name,
+      characters: party.characters.where((c) => c != character).toList(),
+    );
+    state = state.map((p) => p == party ? updatedParty : p).toList();
+  }
 }
 
-final partiesProvider = StateNotifierProvider<PartyNotifier, List<Party>>(
+final partyProvider = StateNotifierProvider<PartyNotifier, List<Party>>(
   (ref) => PartyNotifier(),
 );

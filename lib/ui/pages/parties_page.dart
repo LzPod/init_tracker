@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
 import 'package:simple_init_tracker/models/party.dart';
-import 'package:simple_init_tracker/ui/widgets/add_party_dialog.dart';
-import 'package:simple_init_tracker/ui/widgets/party_tile.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/add_party_dialog.dart';
+import 'package:simple_init_tracker/ui/widgets/tiles/party_tile.dart';
 
 class PartiesPage extends ConsumerWidget {
   const PartiesPage({super.key});
@@ -15,13 +15,13 @@ class PartiesPage extends ConsumerWidget {
     );
 
     if (newParty != null) {
-      ref.read(partiesProvider.notifier).addParty(newParty.name);
+      ref.read(partyProvider.notifier).addParty(newParty.name);
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final parties = ref.watch(partiesProvider);
+    final parties = ref.watch(partyProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Parties'),
