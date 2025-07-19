@@ -19,6 +19,7 @@ class CharacterNotifier extends StateNotifier<List<Character>> {
 
   void removeCharacter(Character character) {
     state = state.where((c) => c != character).toList();
+    _sortCharacters();
   }
 
   void clearCharacters() {

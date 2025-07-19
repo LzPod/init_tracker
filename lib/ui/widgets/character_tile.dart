@@ -11,16 +11,10 @@ class CharacterTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('character_tile'),
+      key: ValueKey(character),
       background: Container(color: Colors.red),
       onDismissed: (direction) {
         onDismissed();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${character.name} removed'),
-            duration: const Duration(seconds: 2),
-          ),
-        );
       },
       child: ListTile(
         leading: Text(character.initiative.toString()),
