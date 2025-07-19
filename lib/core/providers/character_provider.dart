@@ -1,5 +1,3 @@
-//TODO
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/models/character.dart';
 

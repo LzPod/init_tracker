@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_init_tracker/core/providers/party_provider.dart';
+import 'package:simple_init_tracker/models/party.dart';
+import 'package:simple_init_tracker/ui/widgets/add_party_dialog.dart';
+import 'package:simple_init_tracker/ui/widgets/party_tile.dart';
 
 class PartiesPage extends ConsumerWidget {
   const PartiesPage({super.key});
 
-  // ref.read is used to read the state of a provider.
-  // ref.watch is used to listen to the state of a provider.
+  void _showAddPartyDialog(BuildContext context, WidgetRef ref) async {
+    final Party? newParty = await showDialog<Party>(
+      context: context,
+      builder: (_) => const AddPartyDialog(),
+    );
+
+    if (newParty != null) {
+      ref.read(partiesProvider.notifier).addParty(newParty.name);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final parties = ref.watch(partiesProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Parties'),
       ),
-      body: Center(
-        child: Text(
-          'This is the Parties Page',
-        ),
-      ),
+      body: ListView.builder(
+          itemCount: parties.length,
+          itemBuilder: (BuildContext context, int index) {
+            return PartyTile(
+              party: parties[index],
+            );
+          }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => _showAddPartyDialog(context, ref),
+        child: const Icon(Icons.add),
       ),
     );
   }
