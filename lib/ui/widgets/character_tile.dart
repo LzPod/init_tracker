@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:simple_init_tracker/models/character.dart';
 
 class CharacterTile extends StatelessWidget {
-  const CharacterTile({super.key, required this.character});
+  const CharacterTile(
+      {super.key, required this.character, required this.onDismissed});
 
   final Character character;
+  final VoidCallback onDismissed;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,13 @@ class CharacterTile extends StatelessWidget {
       key: Key('character_tile'),
       background: Container(color: Colors.red),
       onDismissed: (direction) {
-        //TODO: Implement character removal logic
+        onDismissed();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${character.name} removed'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
       },
       child: ListTile(
         leading: Text(character.initiative.toString()),

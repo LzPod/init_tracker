@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/ui/pages/main_page.dart';
 
 void main() {
-  runApp(const InitTrackerApp());
+  runApp(const ProviderScope(
+    child: InitTrackerApp(),
+  ));
 }
 
 class InitTrackerApp extends StatelessWidget {

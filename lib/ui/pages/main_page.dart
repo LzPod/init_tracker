@@ -1,52 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_init_tracker/core/providers/character_provider.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/ui/widgets/add_character_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/character_tile.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerWidget {
   const MainPage({super.key});
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  List<Character> characters = [];
-
-  void _sortCharacters() {
-    characters.sort((a, b) {
-      if (a.initiative != b.initiative) {
-        return b.initiative.compareTo(a.initiative);
-      } else {
-        //TODO: handle tie-breakers
-        return a.name.compareTo(b.name);
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _showAddCharacterDialog() async {
+  void _showAddCharacterDialog(BuildContext context, WidgetRef ref) async {
     final Character? newCharacter = await showDialog<Character>(
       context: context,
-      builder: (BuildContext context) {
-        return const AddCharacterDialog();
-      },
+      builder: (_) => const AddCharacterDialog(),
     );
 
     if (newCharacter != null) {
-      setState(() {
-        characters.add(newCharacter);
-        _sortCharacters();
-      });
+      ref.read(characterProvider.notifier).addCharacter(newCharacter);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final characters = ref.watch(characterProvider);
+
     return Scaffold(
       body: characters.isEmpty
           ? Center(
@@ -61,10 +37,15 @@ class _MainPageState extends State<MainPage> {
               itemBuilder: (context, index) {
                 return CharacterTile(
                   character: characters[index],
+                  onDismissed: () {
+                    ref
+                        .read(characterProvider.notifier)
+                        .removeCharacter(characters[index]);
+                  },
                 );
               }),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showAddCharacterDialog,
+        onPressed: () => _showAddCharacterDialog(context, ref),
         child: const Icon(Icons.add),
       ),
     );
