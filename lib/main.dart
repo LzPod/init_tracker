@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:simple_init_tracker/core/storage/hive_setup.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:simple_init_tracker/ui/pages/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await hiveSetup();
+  await Hive.initFlutter();
+
+  await Hive.openBox('partiesBox');
 
   runApp(const ProviderScope(
     child: InitTrackerApp(),
