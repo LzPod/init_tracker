@@ -1,5 +1,6 @@
-import 'package:simple_init_tracker/models/character.dart';
 import 'package:uuid/uuid.dart';
+
+import 'character.dart';
 
 class Party {
   final String id;
@@ -11,4 +12,18 @@ class Party {
     required this.name,
     required this.characters,
   }) : id = id ?? const Uuid().v4();
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'name': name,
+        'characters': characters.map((c) => c.toMap()).toList(),
+      };
+
+  factory Party.fromMap(Map<String, dynamic> map) => Party(
+        id: map['id'],
+        name: map['name'],
+        characters: (map['characters'] as List)
+            .map((c) => Character.fromMap(Map<String, dynamic>.from(c)))
+            .toList(),
+      );
 }

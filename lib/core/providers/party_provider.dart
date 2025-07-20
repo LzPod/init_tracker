@@ -1,25 +1,37 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_init_tracker/core/repositories/party_repository.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/models/party.dart';
 
 class PartyNotifier extends StateNotifier<List<Party>> {
-  PartyNotifier() : super([]);
+  final PartyRepository _repo = PartyRepository();
 
-  /// State: List of parties in the application.
-  /// This is a list of [Party] objects that represent the parties
-  /// currently being tracked in the application.
+  PartyNotifier() : super([]) {
+    _loadParties();
+  }
+
+  void _loadParties() {
+    state = _repo.load();
+  }
+
+  void _save() {
+    _repo.save(state);
+  }
 
   void addParty(String name) {
     final party = Party(name: name, characters: []);
     state = [...state, party];
+    _save();
   }
 
   void removeParty(String id) {
     state = state.where((party) => party.id != id).toList();
+    _save();
   }
 
   void clearParties() {
     state = [];
+    _save();
   }
 
   void addCharacterToParty(Party party, Character character) {
@@ -29,15 +41,7 @@ class PartyNotifier extends StateNotifier<List<Party>> {
       characters: [...party.characters, character],
     );
     state = state.map((p) => p == party ? updatedParty : p).toList();
-  }
-
-  void removeCharacterFromParty(Party party, Character character) {
-    final updatedParty = Party(
-      id: party.id,
-      name: party.name,
-      characters: party.characters.where((c) => c != character).toList(),
-    );
-    state = state.map((p) => p == party ? updatedParty : p).toList();
+    _save();
   }
 }
 

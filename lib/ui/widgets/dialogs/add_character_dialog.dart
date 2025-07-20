@@ -10,12 +10,14 @@ class AddCharacterDialog extends StatefulWidget {
 
 class _AddCharacterDialogState extends State<AddCharacterDialog> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController initiativeController = TextEditingController();
+  final TextEditingController hitPointsController = TextEditingController();
+  final TextEditingController armorController = TextEditingController();
 
   @override
   void dispose() {
     nameController.dispose();
-    initiativeController.dispose();
+    hitPointsController.dispose();
+    armorController.dispose();
     super.dispose();
   }
 
@@ -37,10 +39,19 @@ class _AddCharacterDialogState extends State<AddCharacterDialog> {
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: initiativeController,
+              controller: hitPointsController,
               decoration: const InputDecoration(
-                labelText: 'Initiative',
-                hintText: 'Enter initiative value',
+                labelText: 'Hit Points (optional)',
+                hintText: 'Enter hit points',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: armorController,
+              decoration: const InputDecoration(
+                labelText: 'Armor Class (optional)',
+                hintText: 'Enter armor class',
               ),
               keyboardType: TextInputType.number,
             ),
@@ -58,29 +69,21 @@ class _AddCharacterDialogState extends State<AddCharacterDialog> {
                 TextButton(
                   onPressed: () {
                     final String name = nameController.text.trim();
-                    final String initiativeText =
-                        initiativeController.text.trim();
+                    final String hitPointsText =
+                        hitPointsController.text.trim();
+                    final String armorText = armorController.text.trim();
 
-                    if (name.isNotEmpty && initiativeText.isNotEmpty) {
-                      final int? initiative = int.tryParse(initiativeText);
-                      if (initiative != null) {
-                        Navigator.of(context).pop(Character(
+                    if (name.isNotEmpty) {
+                      final int? hitPoints = int.tryParse(hitPointsText);
+                      final int? armorClass = int.tryParse(armorText);
+                      Navigator.of(context).pop(Character(
                           name: name,
-                          initiative: initiative,
-                          isMonster: false,
-                        ));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content:
-                                Text('Please enter a valid initiative number'),
-                          ),
-                        );
-                      }
+                          hitPoints: hitPoints,
+                          armorClass: armorClass));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Please fill in all fields'),
+                          content: Text('Character name cannot be empty.'),
                         ),
                       );
                     }

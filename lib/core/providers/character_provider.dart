@@ -26,16 +26,23 @@ class CharacterNotifier extends StateNotifier<List<Character>> {
 
   void _sortCharacters() {
     state.sort((a, b) {
-      if (a.initiative != b.initiative) {
-        return b.initiative.compareTo(a.initiative);
+      final initiativeA = a.initiative ?? 0;
+      final initiativeB = b.initiative ?? 0;
+
+      if (initiativeA != initiativeB) {
+        return initiativeB.compareTo(initiativeA);
       } else {
         return a.name.compareTo(b.name);
       }
     });
   }
+
+  void editCharacter(Character oldCharacter, Character newCharacter) {
+    state = state.map((c) => c == oldCharacter ? newCharacter : c).toList();
+    _sortCharacters();
+  }
 }
 
-// This provider manages the list of characters in the application.
 final characterProvider =
     StateNotifierProvider<CharacterNotifier, List<Character>>(
   (ref) => CharacterNotifier(),
