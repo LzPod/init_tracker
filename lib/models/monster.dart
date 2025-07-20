@@ -1,15 +1,15 @@
 import 'package:uuid/uuid.dart';
 
-import 'character.dart';
-
-class Party {
+class Monster {
   final String id;
   final String name;
-  final List<Character> characters;
+  final int initiative;
+  final int? damageDealt;
 
-  Party({
+  Monster({
     String? id,
     required this.name,
-    required this.characters,
+    required this.initiative,
+    this.damageDealt,
   }) : id = id ?? const Uuid().v4();
 }

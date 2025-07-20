@@ -6,7 +6,6 @@ class Character {
   final int initiative;
   final int? armorClass;
   final int? hitPoints;
-  final bool isMonster;
 
   Character({
     String? id,
@@ -14,6 +13,5 @@ class Character {
     required this.initiative,
     this.armorClass,
     this.hitPoints,
-    required this.isMonster,
   }) : id = id ?? const Uuid().v4();
 }

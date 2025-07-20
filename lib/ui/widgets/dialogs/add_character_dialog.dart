@@ -67,7 +67,6 @@ class _AddCharacterDialogState extends State<AddCharacterDialog> {
                         Navigator.of(context).pop(Character(
                           name: name,
                           initiative: initiative,
-                          isMonster: false,
                         ));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
