@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/models/character.dart';
 
-class PartyMemberTile extends ConsumerWidget {
-  const PartyMemberTile({super.key, required this.character});
+class AdventurerTile extends ConsumerWidget {
+  const AdventurerTile({super.key, required this.character});
 
   final Character character;
 

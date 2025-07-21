@@ -8,6 +8,7 @@ void main() async {
   await Hive.initFlutter();
 
   await Hive.openBox('partiesBox');
+  await Hive.openBox('monstersBox');
 
   runApp(const ProviderScope(
     child: InitTrackerApp(),

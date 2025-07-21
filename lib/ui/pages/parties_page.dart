@@ -6,7 +6,9 @@ import 'package:simple_init_tracker/ui/widgets/dialogs/add_party_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/party_tile.dart';
 
 class PartiesPage extends ConsumerWidget {
-  const PartiesPage({super.key});
+  const PartiesPage({super.key, this.isSelectionMode = false});
+
+  final bool isSelectionMode;
 
   void _showAddPartyDialog(BuildContext context, WidgetRef ref) async {
     final Party? newParty = await showDialog<Party>(
@@ -31,6 +33,7 @@ class PartiesPage extends ConsumerWidget {
           itemBuilder: (BuildContext context, int index) {
             return PartyTile(
               party: parties[index],
+              isSelectionMode: isSelectionMode,
             );
           }),
       floatingActionButton: FloatingActionButton(

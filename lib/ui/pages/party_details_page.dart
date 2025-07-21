@@ -3,18 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/models/party.dart';
-import 'package:simple_init_tracker/ui/widgets/dialogs/add_character_dialog.dart';
-import 'package:simple_init_tracker/ui/widgets/tiles/party_member_tile.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/add_adventurer_dialog.dart';
+import 'package:simple_init_tracker/ui/widgets/tiles/adventurer_tile.dart';
 
 class PartyDetailsPage extends ConsumerWidget {
-  const PartyDetailsPage({super.key, required this.partyId});
+  const PartyDetailsPage(
+      {super.key, required this.partyId, this.isSelectionMode = false});
 
   final String partyId;
+  final bool isSelectionMode;
 
   void _showAddCharacterDialog(BuildContext context, WidgetRef ref) async {
     final Character? newCharacter = await showDialog<Character>(
       context: context,
-      builder: (_) => const AddCharacterDialog(),
+      builder: (_) => const AddAdventurerDialog(),
     );
 
     if (newCharacter != null) {
@@ -41,7 +43,7 @@ class PartyDetailsPage extends ConsumerWidget {
           itemCount: party.characters.length,
           itemBuilder: (BuildContext context, int index) {
             final character = party.characters[index];
-            return PartyMemberTile(
+            return AdventurerTile(
               character: character,
             );
           }),

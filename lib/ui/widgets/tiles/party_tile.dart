@@ -3,9 +3,11 @@ import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/pages/party_details_page.dart';
 
 class PartyTile extends StatelessWidget {
-  const PartyTile({super.key, required this.party});
+  const PartyTile(
+      {super.key, required this.party, this.isSelectionMode = false});
 
   final Party party;
+  final bool isSelectionMode;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class PartyTile extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PartyDetailsPage(partyId: party.id),
+              builder: (context) => PartyDetailsPage(
+                  partyId: party.id, isSelectionMode: isSelectionMode),
             ),
           );
         });

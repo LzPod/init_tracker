@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:simple_init_tracker/models/character.dart';
 
-class AddCharacterDialog extends StatefulWidget {
-  const AddCharacterDialog({super.key});
+class AddAdventurerDialog extends StatefulWidget {
+  const AddAdventurerDialog({super.key});
 
   @override
-  State<AddCharacterDialog> createState() => _AddCharacterDialogState();
+  State<AddAdventurerDialog> createState() => _AddCharacterDialogState();
 }
 
-class _AddCharacterDialogState extends State<AddCharacterDialog> {
+class _AddCharacterDialogState extends State<AddAdventurerDialog> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController hitPointsController = TextEditingController();
   final TextEditingController armorController = TextEditingController();

@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/character_provider.dart';
-import 'package:simple_init_tracker/models/character.dart';
+import 'package:simple_init_tracker/ui/animations/animated_fab.dart';
+import 'package:simple_init_tracker/ui/pages/monsters_page.dart';
 import 'package:simple_init_tracker/ui/pages/parties_page.dart';
-import 'package:simple_init_tracker/ui/widgets/dialogs/add_character_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/character_tile.dart';
 
 class MainPage extends ConsumerWidget {
   const MainPage({super.key});
-
-  void _showAddCharacterDialog(BuildContext context, WidgetRef ref) async {
-    final Character? newCharacter = await showDialog<Character>(
-      context: context,
-      builder: (_) => const AddCharacterDialog(),
-    );
-
-    if (newCharacter != null) {
-      ref.read(characterProvider.notifier).addCharacter(newCharacter);
-    }
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +50,14 @@ class MainPage extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.add_card_sharp),
               title: const Text('Monsters'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MonstersPage(),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
@@ -79,7 +75,7 @@ class MainPage extends ConsumerWidget {
       body: characters.isEmpty
           ? Center(
               child: Text(
-                'No characters added yet.\nTap the + button to add a character.',
+                'characters.isEmpty',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -96,9 +92,23 @@ class MainPage extends ConsumerWidget {
                   },
                 );
               }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddCharacterDialog(context, ref),
-        child: const Icon(Icons.add),
+      floatingActionButton: AnimatedFab(
+        onAddCharacter: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PartiesPage(isSelectionMode: true),
+            ),
+          );
+        },
+        onAddMonster: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MonstersPage(),
+            ),
+          );
+        },
       ),
     );
   }
