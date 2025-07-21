@@ -1,6 +1,7 @@
+import 'package:simple_init_tracker/models/interface/initiative_entity.dart';
 import 'package:uuid/uuid.dart';
 
-class Character {
+class Character implements InitiativeEntity {
   final String id;
   final String name;
   final int? initiative;

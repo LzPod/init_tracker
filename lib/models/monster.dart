@@ -1,6 +1,8 @@
 import 'package:uuid/uuid.dart';
 
-class Monster {
+import 'interface/initiative_entity.dart';
+
+class Monster implements InitiativeEntity {
   final String id;
   final String name;
   final int? initiative;

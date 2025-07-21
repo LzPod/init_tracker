@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/character_provider.dart';
+import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
 import 'package:simple_init_tracker/ui/animations/animated_fab.dart';
 import 'package:simple_init_tracker/ui/pages/monsters_page.dart';
 import 'package:simple_init_tracker/ui/pages/parties_page.dart';
-import 'package:simple_init_tracker/ui/widgets/tiles/character_tile.dart';
+import 'package:simple_init_tracker/ui/widgets/tiles/Initiative_entity_tile.dart';
 
 class MainPage extends ConsumerWidget {
   const MainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final characters = ref.watch(characterProvider);
+    final initEntities = ref.watch(initiativeProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Initiative Tracker'),
         actions: [
-          if (characters.isNotEmpty)
+          if (initEntities.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -72,7 +73,7 @@ class MainPage extends ConsumerWidget {
           ],
         ),
       ),
-      body: characters.isEmpty
+      body: initEntities.isEmpty
           ? Center(
               child: Text(
                 'characters.isEmpty',
@@ -81,14 +82,14 @@ class MainPage extends ConsumerWidget {
               ),
             )
           : ListView.builder(
-              itemCount: characters.length,
+              itemCount: initEntities.length,
               itemBuilder: (context, index) {
-                return CharacterTile(
-                  character: characters[index],
+                return InitiativeEntityTile(
+                  initiativeEntity: initEntities[index],
                   onDismissed: () {
-                    ref
-                        .read(characterProvider.notifier)
-                        .removeCharacter(characters[index]);
+                    ref.read(initiativeProvider.notifier).removeEntity(
+                          initEntities[index],
+                        );
                   },
                 );
               }),
