@@ -5,11 +5,13 @@ import 'package:simple_init_tracker/models/interface/initiative_entity.dart';
 class InitiativeEntityTile extends StatelessWidget {
   final InitiativeEntity initiativeEntity;
   final VoidCallback onDismissed;
+  final void Function(InitiativeEntity)? onTap;
 
   const InitiativeEntityTile({
     super.key,
     required this.initiativeEntity,
     required this.onDismissed,
+    this.onTap,
   });
 
   @override
@@ -31,6 +33,7 @@ class InitiativeEntityTile extends StatelessWidget {
         ),
         title: Text(initiativeEntity.name),
         subtitle: Text(_buildStatsText(initiativeEntity)),
+        onTap: onTap != null ? () => onTap!(initiativeEntity) : null,
       ),
     );
   }

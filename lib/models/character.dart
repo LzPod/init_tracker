@@ -31,4 +31,20 @@ class Character implements InitiativeEntity {
         armorClass: map['armorClass'],
         hitPoints: map['hitPoints'],
       );
+
+  @override
+  Character copyWith({
+    String? name,
+    int? initiative,
+    int? armorClass,
+    int? hitPoints,
+  }) {
+    return Character(
+      id: id,
+      name: name ?? this.name,
+      initiative: initiative ?? this.initiative,
+      armorClass: armorClass ?? this.armorClass,
+      hitPoints: hitPoints ?? this.hitPoints,
+    );
+  }
 }

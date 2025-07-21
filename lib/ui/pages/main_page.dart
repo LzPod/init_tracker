@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:simple_init_tracker/core/providers/character_provider.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
 import 'package:simple_init_tracker/ui/animations/animated_fab.dart';
 import 'package:simple_init_tracker/ui/pages/monsters_page.dart';
 import 'package:simple_init_tracker/ui/pages/parties_page.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/edit_initiative.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/Initiative_entity_tile.dart';
 
 class MainPage extends ConsumerWidget {
@@ -22,7 +22,7 @@ class MainPage extends ConsumerWidget {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                ref.read(characterProvider.notifier).clearCharacters();
+                ref.read(initiativeProvider.notifier).clear();
               },
             ),
         ],
@@ -76,7 +76,7 @@ class MainPage extends ConsumerWidget {
       body: initEntities.isEmpty
           ? Center(
               child: Text(
-                'characters.isEmpty',
+                'Nessun personaggio nell\'iniziativa.\nUsa il pulsante + per aggiungerne.',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
@@ -90,6 +90,20 @@ class MainPage extends ConsumerWidget {
                     ref.read(initiativeProvider.notifier).removeEntity(
                           initEntities[index],
                         );
+                  },
+                  onTap: (entity) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return EditInitiativeDialog(
+                            initiativeEntity: entity,
+                            onInitiativeUpdated: (newInitiative) {
+                              ref
+                                  .read(initiativeProvider.notifier)
+                                  .updateInitiative(entity.id, newInitiative);
+                            },
+                          );
+                        });
                   },
                 );
               }),
@@ -106,7 +120,7 @@ class MainPage extends ConsumerWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const MonstersPage(),
+              builder: (context) => const MonstersPage(isSelectionMode: true),
             ),
           );
         },

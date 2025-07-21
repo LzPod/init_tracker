@@ -29,6 +29,17 @@ class InitiativeNotifier extends StateNotifier<List<InitiativeEntity>> {
       }
     });
   }
+
+  void updateInitiative(String id, int newInitiative) {
+    state = [
+      for (final entity in state)
+        if (entity.id == id)
+          entity.copyWith(initiative: newInitiative)
+        else
+          entity
+    ];
+    _sort();
+  }
 }
 
 final initiativeProvider =

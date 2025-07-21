@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/models/character.dart';
 
-class AdventurerTile extends ConsumerWidget {
-  const AdventurerTile({super.key, required this.character});
+class AdventurerTile extends StatelessWidget {
+  const AdventurerTile({
+    super.key,
+    required this.character,
+    this.isSelectable = false,
+    this.isSelected = false,
+    this.onTap,
+  });
 
   final Character character;
+  final bool isSelectable;
+  final bool isSelected;
+  final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    if (isSelectable) {
+      return ListTile(
+        leading: Checkbox(
+          value: isSelected,
+          onChanged: (_) => onTap?.call(),
+        ),
+        title: Text(character.name),
+        onTap: onTap,
+      );
+    }
+
     return ListTile(
-      onTap: () {
-        // TODO: Implement edit character functionality
-      },
       title: Text(character.name),
-      subtitle: Text(
-          '${character.armorClass != null ? 'AC: ${character.armorClass} • ' : ''}${character.hitPoints != null ? 'HP: ${character.hitPoints}' : ''}'),
     );
   }
 }

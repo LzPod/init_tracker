@@ -32,4 +32,18 @@ class Monster implements InitiativeEntity {
       damageDealt: map['damageDealt'],
     );
   }
+
+  @override
+  Monster copyWith({
+    String? name,
+    int? initiative,
+    int? damageDealt,
+  }) {
+    return Monster(
+      id: id,
+      name: name ?? this.name,
+      initiative: initiative ?? this.initiative,
+      damageDealt: damageDealt ?? this.damageDealt,
+    );
+  }
 }
