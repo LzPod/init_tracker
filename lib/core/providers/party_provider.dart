@@ -40,7 +40,7 @@ class PartyNotifier extends StateNotifier<List<Party>> {
       name: party.name,
       characters: [...party.characters, character],
     );
-    state = state.map((p) => p == party ? updatedParty : p).toList();
+    state = state.map((p) => p.id == party.id ? updatedParty : p).toList();
     _save();
   }
 }

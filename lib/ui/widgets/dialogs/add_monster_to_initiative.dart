@@ -22,7 +22,7 @@ class AddMonsterToInitiativeDialog extends ConsumerStatefulWidget {
 class _AddMonsterToInitiativeDialogState
     extends ConsumerState<AddMonsterToInitiativeDialog> {
   final TextEditingController quantityController =
-      TextEditingController(text: '1');
+  TextEditingController(text: '1');
   InitiativeType selectedType = InitiativeType.individual;
 
   @override
@@ -67,7 +67,7 @@ class _AddMonsterToInitiativeDialogState
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const MainPage()),
-      (route) => false,
+          (route) => false,
     );
   }
 
@@ -121,7 +121,8 @@ class _AddMonsterToInitiativeDialogState
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Theme.of(context)
+                color: Theme
+                    .of(context)
                     .colorScheme
                     .surfaceVariant
                     .withOpacity(0.3),
@@ -129,9 +130,12 @@ class _AddMonsterToInitiativeDialogState
               ),
               child: Text(
                 selectedType == InitiativeType.individual
-                    ? 'Creates separate entries for each monster\n(e.g., "Goblin 1", "Goblin 2")'
-                    : 'Creates one entry for all monsters\n(e.g., "Goblin (x3)")',
-                style: Theme.of(context).textTheme.bodySmall,
+                    ? 'Creates separate entries for each monster'
+                    : 'Creates one entry for all monsters',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodySmall,
               ),
             ),
             const SizedBox(height: 24),

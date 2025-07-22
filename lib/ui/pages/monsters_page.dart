@@ -156,14 +156,12 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
           ],
         ),
       ),
-      floatingActionButton: widget.isSelectionMode
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                _showAddMonsterDialog(context, ref);
-              },
-              child: const Icon(Icons.add),
-            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddMonsterDialog(context, ref);
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

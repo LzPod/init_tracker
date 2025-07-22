@@ -53,9 +53,11 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
       builder: (_) => const AddAdventurerDialog(),
     );
 
+    print('New character: ${newCharacter?.name}');
+
     if (newCharacter != null) {
       ref.read(partyProvider.notifier).addCharacterToParty(
-            widget.party,
+            ref.read(partyProvider).firstWhere((p) => p.id == widget.party.id),
             newCharacter,
           );
     }
