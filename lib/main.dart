@@ -10,6 +10,7 @@ void main() async {
 
   await Hive.openBox('partiesBox');
   await Hive.openBox('monstersBox');
+  await Hive.openBox('apiMonstersBox');
 
   runApp(const ProviderScope(
     child: InitTrackerApp(),
