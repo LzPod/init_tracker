@@ -52,11 +52,11 @@ class MonsterTile extends ConsumerWidget {
               ),
             ),
             if (isCustom)
-              InkWell(
-                onTap: onDelete,
-                child: Icon(Icons.close,
-                    color: Theme.of(context).colorScheme.secondary, size: 20),
-              )
+              IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(Icons.close,
+                      color: Theme.of(context).colorScheme.secondary,
+                      size: 20)),
           ],
         ),
       ),

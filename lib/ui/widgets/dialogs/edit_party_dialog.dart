@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:simple_init_tracker/models/monster.dart';
+import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
-class EditMonsterDialog extends StatefulWidget {
-  const EditMonsterDialog({
+class EditPartyDialog extends StatefulWidget {
+  const EditPartyDialog({
     super.key,
-    required this.monster,
-    required this.onMonsterUpdated,
+    required this.party,
+    required this.onPartyUpdated,
   });
 
-  final Monster monster;
-  final void Function(String) onMonsterUpdated;
+  final Party party;
+  final void Function(Party) onPartyUpdated;
 
   @override
-  State<EditMonsterDialog> createState() => _EditMonsterDialogState();
+  State<EditPartyDialog> createState() => _EditPartyDialogState();
 }
 
-class _EditMonsterDialogState extends State<EditMonsterDialog> {
-  final TextEditingController newMonsterName = TextEditingController();
+class _EditPartyDialogState extends State<EditPartyDialog> {
+  final TextEditingController newPartyName = TextEditingController();
 
   @override
   void dispose() {
-    newMonsterName.dispose();
+    newPartyName.dispose();
     super.dispose();
   }
 
@@ -38,7 +38,7 @@ class _EditMonsterDialogState extends State<EditMonsterDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Edit Monster',
+            Text('Edit Party',
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
             Column(
@@ -53,7 +53,7 @@ class _EditMonsterDialogState extends State<EditMonsterDialog> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextField(
-                    controller: newMonsterName,
+                    controller: newPartyName,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
                       hintText: 'Enter new name',
@@ -95,15 +95,17 @@ class _EditMonsterDialogState extends State<EditMonsterDialog> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        if (newMonsterName.text.isNotEmpty) {
-                          widget.onMonsterUpdated(
-                            newMonsterName.text.trim(),
+                        if (newPartyName.text.isNotEmpty) {
+                          widget.onPartyUpdated(
+                            widget.party.copyWith(
+                              name: newPartyName.text.trim(),
+                            ),
                           );
                           Navigator.of(context).pop();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Monster name cannot be empty.'),
+                              content: Text('Party name cannot be empty.'),
                             ),
                           );
                         }

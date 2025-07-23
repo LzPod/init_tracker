@@ -15,8 +15,8 @@ class CharacterNotifier extends StateNotifier<List<Character>> {
     _sortCharacters();
   }
 
-  void removeCharacter(Character character) {
-    state = state.where((c) => c != character).toList();
+  void removeCharacter(String id) {
+    state = state.where((character) => character.id != id).toList();
     _sortCharacters();
   }
 
@@ -37,8 +37,13 @@ class CharacterNotifier extends StateNotifier<List<Character>> {
     });
   }
 
-  void editCharacter(Character oldCharacter, Character newCharacter) {
-    state = state.map((c) => c == oldCharacter ? newCharacter : c).toList();
+  void updateCharacter(Character newCharacter) {
+    state = state.map((character) {
+      if (character.id == newCharacter.id) {
+        return newCharacter;
+      }
+      return character;
+    }).toList();
     _sortCharacters();
   }
 }

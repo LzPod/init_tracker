@@ -149,16 +149,26 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  labelText: 'Search monsters',
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      // Implement search functionality here
-                    },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextField(
+                  controller: searchController,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  decoration: InputDecoration(
+                    hintText: 'Name',
+                    hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.white54,
+                        ),
+                    border: InputBorder.none,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                 ),
               ),

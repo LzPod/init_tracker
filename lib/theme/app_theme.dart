@@ -13,11 +13,22 @@ class AppTheme {
       color: AppColors.textPrimary,
     ),
     scaffoldBackgroundColor: AppColors.background,
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+        iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.textPrimary;
+          }
+          return AppColors.textSecondary;
+        }),
+      ),
+    ),
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.background,
       primary: AppColors.background,
       onPrimary: AppColors.secondaryBackground,
       secondary: AppColors.textPrimary,
+      onSecondary: AppColors.textSecondary,
       tertiary: AppColors.minorColor,
       secondaryContainer: AppColors.popupBackground,
       onSecondaryContainer: AppColors.onPopupBackground,

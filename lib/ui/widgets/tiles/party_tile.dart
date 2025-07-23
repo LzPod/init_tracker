@@ -9,14 +9,19 @@ class PartyTile extends StatelessWidget {
     super.key,
     required this.party,
     this.isSelectionMode = false,
+    this.onLongPress,
+    this.onDelete,
   });
 
   final Party party;
   final bool isSelectionMode;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: onLongPress,
       onTap: () {
         Navigator.push(
           context,
@@ -67,12 +72,14 @@ class PartyTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (isSelectionMode)
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: Colors.white54,
+            IconButton(
+              onPressed: onDelete,
+              icon: Icon(
+                Icons.close,
+                color: Theme.of(context).colorScheme.secondary,
+                size: 20,
               ),
+            ),
           ],
         ),
       ),

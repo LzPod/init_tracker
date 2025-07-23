@@ -11,17 +11,21 @@ class AdventurerTile extends StatelessWidget {
     this.isSelectable = false,
     this.isSelected = false,
     this.onTap,
+    this.onEdit,
+    this.onDelete,
   });
 
   final Character character;
   final bool isSelectable;
   final bool isSelected;
   final VoidCallback? onTap;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap ?? onEdit,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
@@ -71,6 +75,12 @@ class AdventurerTile extends StatelessWidget {
                 ],
               ),
             ),
+            if (onDelete != null)
+              IconButton(
+                  onPressed: onDelete,
+                  icon: Icon(Icons.close,
+                      color: Theme.of(context).colorScheme.secondary,
+                      size: 20)),
           ],
         ),
       ),

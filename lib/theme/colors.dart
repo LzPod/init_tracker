@@ -8,4 +8,9 @@ class AppColors {
   static const Color minorColor = Color(0xFF8F3C5A);
   static const Color popupBackground = Color(0xFF1D2943);
   static const Color onPopupBackground = Color(0xFF162037);
+
+  // Exo material
+  static const Color blueIce = Color(0xFF28639c);
+  static const Color navyBlaze = Color(0xFF162037);
+  static const Color grey = Color(0xFF848283);
 }

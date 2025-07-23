@@ -22,7 +22,7 @@ class AddMonsterToInitiativeDialog extends ConsumerStatefulWidget {
 class _AddMonsterToInitiativeDialogState
     extends ConsumerState<AddMonsterToInitiativeDialog> {
   final TextEditingController quantityController =
-  TextEditingController(text: '1');
+      TextEditingController(text: '1');
   InitiativeType selectedType = InitiativeType.individual;
 
   @override
@@ -48,7 +48,7 @@ class _AddMonsterToInitiativeDialogState
     if (selectedType == InitiativeType.group) {
       final groupMonster = Monster(
         name: quantity > 1
-            ? '${widget.monster.name} (x$quantity)'
+            ? '$quantity ${widget.monster.name}'
             : widget.monster.name,
         initiative: widget.monster.initiative,
       );
@@ -56,9 +56,8 @@ class _AddMonsterToInitiativeDialogState
     } else {
       for (int i = 1; i <= quantity; i++) {
         final individualMonster = Monster(
-          name: quantity > 1
-              ? '${widget.monster.name} ${i}'
-              : widget.monster.name,
+          name:
+              quantity > 1 ? '${widget.monster.name} $i' : widget.monster.name,
           initiative: widget.monster.initiative,
         );
         initiativeNotifier.addEntity(individualMonster);
@@ -67,36 +66,60 @@ class _AddMonsterToInitiativeDialogState
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const MainPage()),
-          (route) => false,
+      (route) => false,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: Text('Add ${widget.monster.name} to initiative'),
-      contentPadding: const EdgeInsets.all(20),
-      children: [
-        Column(
+    return Dialog(
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: quantityController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Quantity',
-                hintText: 'Enter the number of monsters',
-                border: OutlineInputBorder(),
-              ),
+            Text('Add ${widget.monster.name} to initiative',
+                style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Quantity',
+                    style: Theme.of(context).textTheme.labelMedium),
+                const SizedBox(height: 8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextField(
+                    controller: quantityController,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      hintStyle:
+                          Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: Colors.white54,
+                              ),
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Initiative Type:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 12),
+            Text('Initiative Type:',
+                style: Theme.of(context).textTheme.labelMedium),
+            const SizedBox(height: 6),
             SegmentedButton<InitiativeType>(
+              style: Theme.of(context).segmentedButtonTheme.style,
               segments: const [
                 ButtonSegment<InitiativeType>(
                   value: InitiativeType.individual,
@@ -109,55 +132,58 @@ class _AddMonsterToInitiativeDialogState
                   icon: Icon(Icons.groups),
                 ),
               ],
+              showSelectedIcon: false,
               selected: {selectedType},
               onSelectionChanged: (Set<InitiativeType> selection) {
                 setState(() {
                   selectedType = selection.first;
                 });
               },
-              showSelectedIcon: false,
             ),
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .surfaceVariant
-                    .withOpacity(0.3),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                selectedType == InitiativeType.individual
-                    ? 'Creates separate entries for each monster'
-                    : 'Creates one entry for all monsters',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodySmall,
-              ),
+            const SizedBox(height: 6),
+            Text(
+              selectedType == InitiativeType.individual
+                  ? 'Creates separate entries for each monster'
+                  : 'Creates one entry for all monsters',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Cancel'),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
-                FilledButton(
-                  onPressed: _addToInitiative,
-                  child: const Text('Add to Initiative'),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      // Muted red/burgundy color
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextButton(
+                      onPressed: _addToInitiative,
+                      child: Text('Confirm',
+                          style: Theme.of(context).textTheme.titleMedium),
+                    ),
+                  ),
                 ),
               ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

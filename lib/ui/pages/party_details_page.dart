@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:simple_init_tracker/core/providers/character_provider.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_adventurer_dialog.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/edit_adventurer_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/adventurer_tile.dart';
 
 import 'main_page.dart';
@@ -63,6 +65,22 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
     }
   }
 
+  void _showEditAdventurerDialog(
+      BuildContext context, Character character) async {
+    await showDialog<Character>(
+      context: context,
+      builder: (_) => EditAdventurerDialog(
+        adventurer: character,
+        onAdventurerUpdated: (character) {
+          ref.read(characterProvider.notifier).updateCharacter(character);
+          ref
+              .read(partyProvider.notifier)
+              .editCharacterInParty(widget.party.id, character);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final parties = ref.watch(partyProvider);
@@ -104,6 +122,23 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
                             onTap: widget.isSelectionMode
                                 ? () => _toggleCharacterSelection(character)
                                 : null,
+                            onEdit: () => _showEditAdventurerDialog(
+                              context,
+                              character,
+                            ),
+                            onDelete: () {
+                              ref
+                                  .read(characterProvider.notifier)
+                                  .removeCharacter(
+                                    character.id,
+                                  );
+                              ref
+                                  .read(partyProvider.notifier)
+                                  .removeCharacterFromParty(
+                                    widget.party.id,
+                                    character.id,
+                                  );
+                            },
                           );
                         },
                       ),

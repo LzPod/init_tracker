@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_party_dialog.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/edit_party_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/party_tile.dart';
 
 class PartiesPage extends ConsumerWidget {
@@ -19,6 +20,19 @@ class PartiesPage extends ConsumerWidget {
     if (newParty != null) {
       ref.read(partyProvider.notifier).addParty(newParty.name);
     }
+  }
+
+  void _showEditPartyDialog(
+      BuildContext context, WidgetRef ref, Party party) async {
+    await showDialog<Party>(
+      context: context,
+      builder: (_) => EditPartyDialog(
+        party: party,
+        onPartyUpdated: (party) {
+          ref.read(partyProvider.notifier).updateParty(party);
+        },
+      ),
+    );
   }
 
   @override
@@ -39,6 +53,12 @@ class PartiesPage extends ConsumerWidget {
             return PartyTile(
               party: parties[index],
               isSelectionMode: isSelectionMode,
+              onLongPress: () {
+                _showEditPartyDialog(context, ref, parties[index]);
+              },
+              onDelete: () {
+                ref.read(partyProvider.notifier).removeParty(parties[index].id);
+              },
             );
           }),
       floatingActionButton: FloatingActionButton(

@@ -26,4 +26,15 @@ class Party {
             .map((c) => Character.fromMap(Map<String, dynamic>.from(c)))
             .toList(),
       );
+
+  Party copyWith({
+    String? name,
+    List<Character>? characters,
+  }) {
+    return Party(
+      id: id,
+      name: name ?? this.name,
+      characters: characters ?? this.characters,
+    );
+  }
 }
