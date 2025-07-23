@@ -31,8 +31,8 @@ class MonsterNotifier extends StateNotifier<List<Monster>> {
     _save();
   }
 
-  void removeMonster(Monster monster) {
-    state = state.where((c) => c != monster).toList();
+  void removeMonster(String id) {
+    state = state.where((monster) => monster.id != id).toList();
     _sortMonsters();
     _save();
   }
@@ -56,8 +56,17 @@ class MonsterNotifier extends StateNotifier<List<Monster>> {
     _save();
   }
 
-  void editMonster(Monster oldMonster, Monster newMonster) {
-    state = state.map((c) => c == oldMonster ? newMonster : c).toList();
+  // void editMonster(Monster oldMonster, Monster newMonster) {
+  //   state = state.map((c) => c == oldMonster ? newMonster : c).toList();
+  //   _sortMonsters();
+  //   _save();
+  // }
+
+  void updateMonster(String id, String newName) {
+    state = [
+      for (final monster in state)
+        if (monster.id == id) monster.copyWith(name: newName) else monster
+    ];
     _sortMonsters();
     _save();
   }

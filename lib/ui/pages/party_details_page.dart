@@ -73,7 +73,10 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentParty.name),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: Theme.of(context).iconTheme,
+        title: Text(currentParty.name,
+            style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: Stack(
         children: [
@@ -127,7 +130,14 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
         onPressed: () {
           _showAddCharacterDialog(context, ref);
         },
-        child: const Icon(Icons.add),
+        child: SizedBox(
+          width: 32,
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.secondary,
+            size: 32,
+          ),
+        ),
       ),
     );
   }

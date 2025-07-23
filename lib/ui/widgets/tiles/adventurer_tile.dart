@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simple_init_tracker/models/character.dart';
+
+//TODO: Use apptheme
 
 class AdventurerTile extends StatelessWidget {
   const AdventurerTile({
@@ -17,19 +20,60 @@ class AdventurerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isSelectable) {
-      return ListTile(
-        leading: Checkbox(
-          value: isSelected,
-          onChanged: (_) => onTap?.call(),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2C3550),
+          borderRadius: BorderRadius.circular(12),
         ),
-        title: Text(character.name),
-        onTap: onTap,
-      );
-    }
-
-    return ListTile(
-      title: Text(character.name),
+        child: Row(
+          children: [
+            if (!isSelectable)
+              SvgPicture.asset(
+                'assets/icon/adventurer_icon.svg',
+                height: 40,
+                width: 40,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              )
+            else
+              Checkbox(
+                value: isSelected,
+                onChanged: (_) => onTap?.call(),
+                activeColor: Colors.white,
+                checkColor: const Color(0xFF2C3550),
+              ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    character.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'AC: ${character.armorClass} • HP: ${character.hitPoints}/${character.hitPoints}',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

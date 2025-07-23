@@ -7,7 +7,10 @@ import 'package:simple_init_tracker/core/providers/monsters_provider.dart';
 import 'package:simple_init_tracker/models/monster.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_monster.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_monster_to_initiative.dart';
+import 'package:simple_init_tracker/ui/widgets/dialogs/edit_monster_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/tiles/monster_tile.dart';
+
+//TODO: Add search functionality for monsters
 
 class MonstersPage extends ConsumerStatefulWidget {
   const MonstersPage({super.key, this.isSelectionMode = false});
@@ -21,6 +24,7 @@ class MonstersPage extends ConsumerStatefulWidget {
 class _MonstersPageState extends ConsumerState<MonstersPage> {
   List<dynamic> apiMonsters = [];
   bool isLoading = true;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -52,12 +56,23 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
     );
   }
 
+  void _showEditMonsterDialog(BuildContext context, Monster monster) async {
+    await showDialog<Monster>(
+      context: context,
+      builder: (_) => EditMonsterDialog(
+        monster: monster,
+        onMonsterUpdated: (newName) {
+          ref
+              .read(monstersProvider.notifier)
+              .updateMonster(monster.id, newName);
+        },
+      ),
+    );
+  }
+
   void _handleApiMonsterTap(Map<String, dynamic> apiMonsterData) {
-    // Converti il mostro dall'API in un Monster object
     final apiMonster = Monster(
       name: apiMonsterData['name'],
-      // Qui potresti aggiungere altri dati se disponibili dall'API
-      // Per ora usiamo valori di default
     );
     _showAddToInitiativeDialog(apiMonster);
   }
@@ -91,24 +106,46 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isSelectionMode ? 'Select Monster' : 'Monsters'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.isSelectionMode ? 'Select Monster' : 'Monsters',
+            style: Theme.of(context).textTheme.headlineLarge),
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Custom monsters',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  labelText: 'Search monsters',
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // Implement search functionality here
+                    },
+                  ),
+                ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text('Custom monsters',
+                  style: Theme.of(context).textTheme.headlineMedium),
+            ),
             if (monsters.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                    "Add monsters to your collection by pressing the '+' button below."),
+                    "Add monsters to your collection by pressing the '+' button below.",
+                    style: Theme.of(context).textTheme.bodyMedium),
               )
             else
               ListView.builder(
@@ -122,15 +159,27 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
                     onTap: widget.isSelectionMode
                         ? () => _showAddToInitiativeDialog(monster)
                         : null,
+                    onEdit: () => _showEditMonsterDialog(context, monster),
+                    onDelete: () {
+                      ref
+                          .read(monstersProvider.notifier)
+                          .removeMonster(monster.id);
+                    },
+                    isCustom: true,
                   );
                 },
               ),
-            const Divider(),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Divider(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
                 '5e monsters',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             if (isLoading)
@@ -142,11 +191,8 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
                 itemCount: apiMonsters.length,
                 itemBuilder: (context, index) {
                   final monster = apiMonsters[index];
-                  return ListTile(
-                    title: Text(monster['name']),
-                    trailing: widget.isSelectionMode
-                        ? const Icon(Icons.arrow_forward_ios)
-                        : null,
+                  return MonsterTile(
+                    monster: Monster(name: monster['name']),
                     onTap: widget.isSelectionMode
                         ? () => _handleApiMonsterTap(monster)
                         : null,
@@ -157,10 +203,15 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddMonsterDialog(context, ref);
-        },
-        child: const Icon(Icons.add),
+        onPressed: () => _showAddMonsterDialog(context, ref),
+        child: SizedBox(
+          width: 32,
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.secondary,
+            size: 32,
+          ),
+        ),
       ),
     );
   }

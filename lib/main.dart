@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:simple_init_tracker/theme/app_theme.dart';
 import 'package:simple_init_tracker/ui/pages/main_page.dart';
 
 void main() async {
@@ -22,10 +23,9 @@ class InitTrackerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Init Tracker',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      //TODO: add lightTheme
+      theme: AppTheme.darkTheme,
+      darkTheme: AppTheme.darkTheme,
       home: const MainPage(),
     );
   }

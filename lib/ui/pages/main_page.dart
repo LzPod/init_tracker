@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
+import 'package:simple_init_tracker/theme/colors.dart';
 import 'package:simple_init_tracker/ui/animations/animated_fab.dart';
 import 'package:simple_init_tracker/ui/pages/monsters_page.dart';
 import 'package:simple_init_tracker/ui/pages/parties_page.dart';
@@ -16,11 +18,16 @@ class MainPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Initiative Tracker'),
+        iconTheme: Theme.of(context).iconTheme,
+        title: Text('Initiative Tracker',
+            style: Theme.of(context).textTheme.headlineLarge),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           if (initEntities.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.delete),
+              icon: Icon(Icons.delete,
+                  color: Theme.of(context).colorScheme.secondary),
               onPressed: () {
                 ref.read(initiativeProvider.notifier).clear();
               },
@@ -28,17 +35,31 @@ class MainPage extends ConsumerWidget {
         ],
       ),
       drawer: Drawer(
+        backgroundColor: AppColors.popupBackground,
+        shape: RoundedRectangleBorder(),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text('Drawer Header',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppColors.onPopupBackground),
+              child: Text('Initiative Tracker',
+                  style: Theme.of(context).textTheme.headlineMedium),
             ),
             ListTile(
-              leading: const Icon(Icons.group),
-              title: const Text('Adventurers'),
+              leading: SizedBox(
+                width: 32,
+                child: SvgPicture.asset(
+                  'assets/icon/adventurer_icon.svg',
+                  width: 32,
+                  height: 32,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+              title: Text('Adventurers',
+                  style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {
                 Navigator.push(
                   context,
@@ -49,8 +70,20 @@ class MainPage extends ConsumerWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.add_card_sharp),
-              title: const Text('Monsters'),
+              leading: SizedBox(
+                width: 32,
+                child: SvgPicture.asset(
+                  'assets/icon/monster_icon.svg',
+                  width: 32,
+                  height: 32,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+              title: Text('Monsters',
+                  style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {
                 Navigator.push(
                   context,
@@ -61,13 +94,29 @@ class MainPage extends ConsumerWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              leading: SizedBox(
+                width: 32,
+                child: Icon(
+                  Icons.settings,
+                  size: 32,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              title: Text('Settings',
+                  style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('About'),
+              leading: SizedBox(
+                width: 32,
+                child: Icon(
+                  Icons.info,
+                  size: 32,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              title: Text('About',
+                  style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {},
             ),
           ],
@@ -75,10 +124,13 @@ class MainPage extends ConsumerWidget {
       ),
       body: initEntities.isEmpty
           ? Center(
-              child: Text(
-                'Nessun personaggio nell\'iniziativa.\nUsa il pulsante + per aggiungerne.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Text(
+                  'Add your first initiative entity by tapping the "+" button below.',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             )
           : ListView.builder(

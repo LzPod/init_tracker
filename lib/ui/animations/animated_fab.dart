@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedFab extends StatefulWidget {
   final VoidCallback? onAddCharacter;
@@ -17,7 +18,6 @@ class AnimatedFab extends StatefulWidget {
 class _AnimatedFabState extends State<AnimatedFab>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _animation;
   bool _isExpanded = false;
 
   @override
@@ -26,10 +26,6 @@ class _AnimatedFabState extends State<AnimatedFab>
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 250),
       vsync: this,
-    );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
     );
   }
 
@@ -58,32 +54,60 @@ class _AnimatedFabState extends State<AnimatedFab>
       width: _isExpanded ? 180 : 56,
       height: 56,
       decoration: BoxDecoration(
-        color: Theme.of(context).floatingActionButtonTheme.backgroundColor ??
-            Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(28),
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(10),
       ),
       child: _isExpanded
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.person_add, color: Colors.white),
+                  icon: SizedBox(
+                    width: 32,
+                    child: SvgPicture.asset(
+                      'assets/icon/adventurer_icon.svg',
+                      width: 32,
+                      height: 32,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.secondary,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     _toggleExpansion();
                     widget.onAddCharacter?.call();
                   },
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_card_sharp, color: Colors.white),
+                  icon: SizedBox(
+                    width: 32,
+                    child: SvgPicture.asset(
+                      'assets/icon/monster_icon.svg',
+                      width: 32,
+                      height: 32,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.secondary,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     _toggleExpansion();
                     widget.onAddMonster?.call();
                   },
                 ),
                 Transform.rotate(
-                  angle: 3.14159 / 4, // 45 degrees (X)
+                  angle: 3.14159 / 4,
                   child: IconButton(
-                    icon: const Icon(Icons.add, color: Colors.white),
+                    icon: SizedBox(
+                      width: 32,
+                      child: Icon(
+                        Icons.add,
+                        color: Theme.of(context).colorScheme.secondary,
+                        size: 32,
+                      ),
+                    ),
                     onPressed: _toggleExpansion,
                   ),
                 ),
@@ -91,7 +115,14 @@ class _AnimatedFabState extends State<AnimatedFab>
             )
           : Center(
               child: IconButton(
-                icon: const Icon(Icons.add, color: Colors.white),
+                icon: SizedBox(
+                  width: 32,
+                  child: Icon(
+                    Icons.add,
+                    color: Theme.of(context).colorScheme.secondary,
+                    size: 32,
+                  ),
+                ),
                 onPressed: _toggleExpansion,
               ),
             ),

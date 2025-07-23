@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_init_tracker/models/interface/initiative_entity.dart';
+import 'package:simple_init_tracker/theme/colors.dart';
 
 class EditInitiativeDialog extends StatefulWidget {
   const EditInitiativeDialog({
@@ -26,53 +27,98 @@ class _EditInitiativeDialogState extends State<EditInitiativeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: const Text('Edit Initiative'),
-      contentPadding: const EdgeInsets.all(20),
-      children: [
-        Column(
+    return Dialog(
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: newInitiative,
-              decoration: const InputDecoration(
-                labelText: 'New Initiative',
-                hintText: 'Enter new initiative value',
-              ),
+            Text('Edit Initiative',
+                style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('New initiative',
+                    style: Theme.of(context).textTheme.labelMedium),
+                const SizedBox(height: 8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextField(
+                    controller: newInitiative,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    decoration: InputDecoration(
+                      hintText: 'Enter new initiative',
+                      hintStyle:
+                          Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: Colors.white54,
+                              ),
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  onPressed: () {
-                    final int initiative =
-                        int.tryParse(newInitiative.text.trim()) ?? 0;
-                    if (initiative > 0) {
-                      widget.onInitiativeUpdated(initiative);
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
                       Navigator.of(context).pop();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Initiative value cannot be empty.'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Add'),
+                    },
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      // Muted red/burgundy color
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        final int initiative =
+                            int.tryParse(newInitiative.text.trim()) ?? 0;
+                        if (initiative > 0) {
+                          widget.onInitiativeUpdated(initiative);
+                          Navigator.of(context).pop();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Initiative value cannot be empty.'),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text('Confirm',
+                          style: Theme.of(context).textTheme.titleMedium),
+                    ),
+                  ),
                 ),
               ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

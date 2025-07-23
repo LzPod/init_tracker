@@ -26,7 +26,12 @@ class PartiesPage extends ConsumerWidget {
     final parties = ref.watch(partyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Parties'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: Theme.of(context).iconTheme,
+        title: Text(
+          'Parties',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       body: ListView.builder(
           itemCount: parties.length,
@@ -38,7 +43,14 @@ class PartiesPage extends ConsumerWidget {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddPartyDialog(context, ref),
-        child: const Icon(Icons.add),
+        child: SizedBox(
+          width: 32,
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.secondary,
+            size: 32,
+          ),
+        ),
       ),
     );
   }
