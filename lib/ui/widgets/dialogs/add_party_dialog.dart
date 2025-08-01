@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
@@ -31,12 +32,14 @@ class _AddPartyDialogState extends State<AddPartyDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Add Party', style: Theme.of(context).textTheme.headlineSmall),
+            Text(AppLocalizations.of(context).addParty,
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Name', style: Theme.of(context).textTheme.labelMedium),
+                Text(AppLocalizations.of(context).name,
+                    style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
@@ -47,7 +50,7 @@ class _AddPartyDialogState extends State<AddPartyDialog> {
                     controller: nameController,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Name',
+                      hintText: AppLocalizations.of(context).name,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -69,7 +72,7 @@ class _AddPartyDialogState extends State<AddPartyDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -95,13 +98,14 @@ class _AddPartyDialogState extends State<AddPartyDialog> {
                           ));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please fill in all fields'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)
+                                  .partyNameRequiredError),
                             ),
                           );
                         }
                       },
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

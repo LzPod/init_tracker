@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/character_provider.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_adventurer_dialog.dart';
@@ -55,8 +56,6 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
       builder: (_) => const AddAdventurerDialog(),
     );
 
-    print('New character: ${newCharacter?.name}');
-
     if (newCharacter != null) {
       ref.read(partyProvider.notifier).addCharacterToParty(
             ref.read(partyProvider).firstWhere((p) => p.id == widget.party.id),
@@ -102,8 +101,10 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
             children: [
               Expanded(
                 child: currentParty.characters.isEmpty
-                    ? const Center(
-                        child: Text('Nessun personaggio in questo party'),
+                    ? Center(
+                        child: Text(
+                            AppLocalizations.of(context).noAdventurersMessage,
+                            style: Theme.of(context).textTheme.bodyLarge),
                       )
                     : ListView.builder(
                         padding: EdgeInsets.only(
@@ -153,7 +154,8 @@ class _PartyDetailPageState extends ConsumerState<PartyDetailsPage> {
               child: ElevatedButton(
                 onPressed: _addSelectedToInitiative,
                 child: Text(
-                  'Aggiungi ${_selectedCharacters.length} ${_selectedCharacters.length == 1 ? 'personaggio' : 'personaggi'}',
+                  AppLocalizations.of(context)
+                      .addCharactersToInitiative(_selectedCharacters.length),
                   style: const TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),

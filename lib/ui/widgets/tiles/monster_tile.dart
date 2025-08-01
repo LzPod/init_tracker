@@ -27,7 +27,7 @@ class MonsterTile extends ConsumerWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-          color: const Color(0xFF2C3550),
+          color: Theme.of(context).colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -36,18 +36,14 @@ class MonsterTile extends ConsumerWidget {
               'assets/icon/monster_icon.svg',
               width: 32,
               height: 32,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.secondary, BlendMode.srcIn),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 monster.name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/monster.dart';
 import 'package:simple_init_tracker/ui/pages/main_page.dart';
 
@@ -36,8 +37,8 @@ class _AddMonsterToInitiativeDialogState
 
     if (quantity <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a valid quantity.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).invalidQuantityError),
         ),
       );
       return;
@@ -89,7 +90,7 @@ class _AddMonsterToInitiativeDialogState
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Quantity',
+                Text(AppLocalizations.of(context).quantity,
                     style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
@@ -101,7 +102,7 @@ class _AddMonsterToInitiativeDialogState
                     controller: quantityController,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Name',
+                      hintText: AppLocalizations.of(context).quantity,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -115,20 +116,21 @@ class _AddMonsterToInitiativeDialogState
               ],
             ),
             const SizedBox(height: 20),
-            Text('Initiative Type:',
+            Text(AppLocalizations.of(context).initiativeType,
                 style: Theme.of(context).textTheme.labelMedium),
             const SizedBox(height: 6),
             SegmentedButton<InitiativeType>(
               style: Theme.of(context).segmentedButtonTheme.style,
-              segments: const [
+              segments: [
                 ButtonSegment<InitiativeType>(
                   value: InitiativeType.individual,
-                  label: Text('Individual'),
+                  label:
+                      Text(AppLocalizations.of(context).individualInitiative),
                   icon: Icon(Icons.person),
                 ),
                 ButtonSegment<InitiativeType>(
                   value: InitiativeType.group,
-                  label: Text('Group'),
+                  label: Text(AppLocalizations.of(context).groupInitiative),
                   icon: Icon(Icons.groups),
                 ),
               ],
@@ -143,8 +145,8 @@ class _AddMonsterToInitiativeDialogState
             const SizedBox(height: 6),
             Text(
               selectedType == InitiativeType.individual
-                  ? 'Creates separate entries for each monster'
-                  : 'Creates one entry for all monsters',
+                  ? AppLocalizations.of(context).individualInitiativeDescription
+                  : AppLocalizations.of(context).groupInitiativeDescription,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
@@ -157,7 +159,7 @@ class _AddMonsterToInitiativeDialogState
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Theme.of(context).colorScheme.onSecondary,
                           ),
@@ -174,7 +176,7 @@ class _AddMonsterToInitiativeDialogState
                     ),
                     child: TextButton(
                       onPressed: _addToInitiative,
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

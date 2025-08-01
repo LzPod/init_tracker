@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/pages/party_details_page.dart';
 
@@ -37,7 +38,7 @@ class PartyTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF2C3550),
+          color: Theme.of(context).colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -54,21 +55,16 @@ class PartyTile extends StatelessWidget {
                 children: [
                   Text(
                     party.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${party.characters.length} personaggi',
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
-                  ),
+                      AppLocalizations.of(context)
+                          .characterCount(party.characters.length),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          )),
                 ],
               ),
             ),

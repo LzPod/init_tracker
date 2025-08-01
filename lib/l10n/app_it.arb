@@ -1,0 +1,54 @@
+{
+  "appTitle": "Initiative Tracker",
+  "partiesTitle": "Gruppi",
+  "adventurersTitle": "Avventurieri",
+  "monstersTitle": "Mostri",
+  "settingsTitle": "Impostazioni",
+  "aboutTitle": "Informazioni",
+  "selectMonster": "Seleziona Mostro",
+  "name": "Nome",
+  "newName": "Nuovo Nome",
+  "newInitiative": "Nuova Iniziativa",
+  "hitPoints": "Punti Ferita",
+  "armorClass": "Classe Armatura",
+  "quantity": "Quantità",
+  "customMonstersTitle": "Mostri Personalizzati",
+  "addCustomMonstersTip": "Aggiungi mostri premendo il pulsante +.",
+  "fifthEditionMonstersTitle": "Mostri Quinta Edizione",
+  "noMonstersFound": "Nessun mostro trovato.",
+  "partiesPageTitle": "Gruppi",
+  "noAdventurersMessage": "Nessun avventuriero disponibile.",
+  "addCharactersToInitiative": "Aggiungi {count, plural, one {{count} avventuriero} other {{count} avventurieri}}",
+  "@addCharactersToInitiative": {
+    "description": "Messaggio per aggiungere personaggi all'iniziativa con supporto al plurale",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "addCharacterTitle": "Aggiungi Avventuriero",
+  "cancel": "Annulla",
+  "confirm": "Conferma",
+  "nameRequiredError": "Il nome è obbligatorio.",
+  "monsterNameRequiredError": "Il nome del mostro è obbligatorio.",
+  "partyNameRequiredError": "Il nome del gruppo è obbligatorio.",
+  "invalidQuantityError": "Quantità non valida.",
+  "invalidInitiativeError": "Iniziativa non valida.",
+  "addMonsterTitle": "Aggiungi Mostro",
+  "initiativeType": "Tipo di Iniziativa",
+  "individualInitiative": "Individuale",
+  "individualInitiativeDescription": "Ogni creatura tira l'iniziativa separatamente.",
+  "groupInitiative": "Gruppo",
+  "groupInitiativeDescription": "Tutte le creature dello stesso tipo agiscono con la stessa iniziativa.",
+  "addParty": "Aggiungi Gruppo",
+  "editAdventurerTitle": "Modifica Avventuriero",
+  "editInitiativeTitle": "Modifica Iniziativa",
+  "editMonsterTitle": "Modifica Mostro",
+  "editPartyTitle": "Modifica Gruppo",
+  "characterCount": "{count, plural, one {{count} avventuriero} other {{count} avventurieri}}",
+  "@characterCount": {
+    "description": "Visualizza il numero di avventurieri con formattazione plurale",
+    "placeholders": {
+      "count": {}
+    }
+  }
+}

@@ -17,6 +17,8 @@ class InitiativeEntityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCharacter = initiativeEntity is Character;
+
     return Dismissible(
       key: ValueKey(initiativeEntity),
       background: Container(
@@ -33,55 +35,51 @@ class InitiativeEntityTile extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFF2C3550),
+            color: Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             children: [
-              if (initiativeEntity is Character)
-                SvgPicture.asset(
-                  'assets/icon/adventurer_icon.svg',
-                  width: 40,
-                  height: 40,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                )
-              else
-                SvgPicture.asset(
-                  'assets/icon/monster_icon.svg',
-                  width: 40,
-                  height: 40,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                ),
+              SvgPicture.asset(
+                isCharacter
+                    ? 'assets/icon/adventurer_icon.svg'
+                    : 'assets/icon/monster_icon.svg',
+                width: 40,
+                height: 40,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              ),
               const SizedBox(width: 16),
-
-              // Name and stats
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       initiativeEntity.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      _buildStatsText(initiativeEntity),
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14,
+                    if (isCharacter)
+                      Row(
+                        children: [
+                          StatIconText(
+                            value: (initiativeEntity as Character).hitPoints,
+                            assetPath: 'assets/icon/hit_points.svg',
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
+                          if ((initiativeEntity as Character).hitPoints != null)
+                            const SizedBox(width: 12),
+                          StatIconText(
+                            value: (initiativeEntity as Character).armorClass,
+                            assetPath: 'assets/icon/armor_class.svg',
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
+                        ],
                       ),
-                    ),
                   ],
                 ),
               ),
-
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -90,21 +88,8 @@ class InitiativeEntityTile extends StatelessWidget {
                     width: 46,
                     height: 46,
                   ),
-                  Text(
-                    initiativeEntity.initiative?.toString() ?? '-',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 1),
-                          blurRadius: 2,
-                          color: Colors.black54,
-                        ),
-                      ],
-                    ),
-                  ),
+                  Text(initiativeEntity.initiative?.toString() ?? '',
+                      style: Theme.of(context).textTheme.titleLarge),
                 ],
               ),
             ],
@@ -113,15 +98,42 @@ class InitiativeEntityTile extends StatelessWidget {
       ),
     );
   }
+}
 
-  String _buildStatsText(InitiativeEntity entity) {
-    final stats = <String>[];
+class StatIconText extends StatelessWidget {
+  final int? value;
+  final String assetPath;
+  final Color? color;
 
-    if (entity is Character) {
-      if (entity.armorClass != null) stats.add('AC: ${entity.armorClass}');
-      if (entity.hitPoints != null) stats.add('HP: ${entity.hitPoints}');
-    }
+  const StatIconText({
+    super.key,
+    required this.value,
+    required this.assetPath,
+    this.color,
+  });
 
-    return stats.join(' • ');
+  @override
+  Widget build(BuildContext context) {
+    if (value == null) return const SizedBox.shrink();
+
+    final resolvedColor = color ?? Theme.of(context).colorScheme.onSecondary;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          value.toString(),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: resolvedColor,
+              ),
+        ),
+        const SizedBox(width: 6),
+        SvgPicture.asset(
+          assetPath,
+          height: 14,
+          colorFilter: ColorFilter.mode(resolvedColor, BlendMode.srcIn),
+        ),
+      ],
+    );
   }
 }

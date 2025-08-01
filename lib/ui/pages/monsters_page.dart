@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:simple_init_tracker/core/providers/monsters_provider.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/monster.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_monster.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_monster_to_initiative.dart';
@@ -105,7 +106,6 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
         });
       }
     } catch (e) {
-      print('Error fetching monsters: $e');
       setState(() {
         isLoading = false;
       });
@@ -127,15 +127,13 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
   @override
   Widget build(BuildContext context) {
     final customMonsters = ref.watch(monstersProvider);
-    print(
-        'Custom Monsters: ${customMonsters.length}, filtered: ${filteredCustomMonsters.length}');
-    final bool hasCustomMonsters =
-        customMonsters.isNotEmpty && filteredCustomMonsters.isEmpty;
-    print('Has Custom Monsters: $hasCustomMonsters');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(widget.isSelectionMode ? 'Select Monster' : 'Monsters',
+        title: Text(
+            widget.isSelectionMode
+                ? AppLocalizations.of(context).selectMonster
+                : AppLocalizations.of(context).monstersTitle,
             style: Theme.of(context).textTheme.headlineLarge),
         centerTitle: true,
         iconTheme: IconThemeData(
@@ -158,7 +156,7 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
                   controller: searchController,
                   style: Theme.of(context).textTheme.bodyLarge,
                   decoration: InputDecoration(
-                    hintText: 'Name',
+                    hintText: AppLocalizations.of(context).name,
                     hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.white54,
                         ),
@@ -177,14 +175,13 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
                 searchController.text == '')
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text('Custom monsters',
+                child: Text(AppLocalizations.of(context).customMonstersTitle,
                     style: Theme.of(context).textTheme.headlineMedium),
               ),
             if (customMonsters.isEmpty && searchController.text == '')
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                    "Add monsters to your collection by pressing the '+' button below.",
+                child: Text(AppLocalizations.of(context).addCustomMonstersTip,
                     style: Theme.of(context).textTheme.bodyMedium),
               )
             else if (customMonsters.isNotEmpty)
@@ -220,7 +217,7 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Text(
-                  '5e monsters',
+                  AppLocalizations.of(context).fifthEditionMonstersTitle,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
@@ -245,7 +242,7 @@ class _MonstersPageState extends ConsumerState<MonstersPage> {
                 filteredCustomMonsters.isEmpty &&
                 !isLoading)
               Center(
-                child: Text('No monsters found.',
+                child: Text(AppLocalizations.of(context).noMonstersFound,
                     style: Theme.of(context).textTheme.headlineSmall),
               ),
           ],

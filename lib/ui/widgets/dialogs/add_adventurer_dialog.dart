@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
@@ -36,7 +37,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Title
-            Text('Add Character',
+            Text(AppLocalizations.of(context).addCharacterTitle,
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
 
@@ -44,7 +45,8 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Name', style: Theme.of(context).textTheme.labelMedium),
+                Text(AppLocalizations.of(context).name,
+                    style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
@@ -55,7 +57,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                     controller: nameController,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Name',
+                      hintText: AppLocalizations.of(context).name,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -79,7 +81,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hit points',
+                        AppLocalizations.of(context).hitPoints,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       const SizedBox(height: 8),
@@ -95,7 +97,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                           style: Theme.of(context).textTheme.bodyLarge,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: 'Hit points',
+                            hintText: AppLocalizations.of(context).hitPoints,
                             hintStyle:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
@@ -116,7 +118,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Armor Class',
+                      Text(AppLocalizations.of(context).armorClass,
                           style: Theme.of(context).textTheme.labelMedium),
                       const SizedBox(height: 8),
                       Container(
@@ -131,7 +133,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                           style: Theme.of(context).textTheme.bodyLarge,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: 'Armor class',
+                            hintText: AppLocalizations.of(context).armorClass,
                             hintStyle:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
@@ -159,7 +161,7 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -192,13 +194,14 @@ class _AddCharacterDialogState extends State<AddAdventurerDialog> {
                               armorClass: armorClass));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Character name cannot be empty.'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)
+                                  .nameRequiredError),
                             ),
                           );
                         }
                       },
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

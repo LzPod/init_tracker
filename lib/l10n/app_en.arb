@@ -1,0 +1,54 @@
+{
+  "appTitle": "Initiative Tracker",
+  "partiesTitle": "Parties",
+  "adventurersTitle": "Adventurers",
+  "monstersTitle": "Monsters",
+  "settingsTitle": "Settings",
+  "aboutTitle": "About",
+  "selectMonster": "Select Monster",
+  "name": "Name",
+  "newName": "New Name",
+  "newInitiative": "New Initiative",
+  "hitPoints": "Hit Points",
+  "armorClass": "Armor Class",
+  "quantity": "Quantity",
+  "customMonstersTitle": "Custom Monsters",
+  "addCustomMonstersTip": "Add custom monsters by pressing the + button.",
+  "fifthEditionMonstersTitle": "5th Edition Monsters",
+  "noMonstersFound": "No monsters found.",
+  "partiesPageTitle": "Parties",
+  "noAdventurersMessage": "Add adventurers by pressing the + button.",
+  "addCharactersToInitiative": "Add {count, plural, one {{count} adventurer} other {{count} adventurers}}",
+  "@addCharactersToInitiative": {
+    "description": "Message for adding characters to the initiative with plural support",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "addCharacterTitle": "Add Adventurer",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "nameRequiredError": "Name is required.",
+  "monsterNameRequiredError": "Monster name is required.",
+  "partyNameRequiredError": "Party name is required.",
+  "invalidQuantityError": "Invalid quantity.",
+  "invalidInitiativeError": "Invalid initiative.",
+  "addMonsterTitle": "Add Monster",
+  "initiativeType": "Initiative Type",
+  "individualInitiative": "Individual Initiative",
+  "individualInitiativeDescription": "Each creature rolls initiative separately.",
+  "groupInitiative": "Group Initiative",
+  "groupInitiativeDescription": "All creatures of the same type act on the same initiative.",
+  "addParty": "Add Party",
+  "editAdventurerTitle": "Edit Adventurer",
+  "editInitiativeTitle": "Edit Initiative",
+  "editMonsterTitle": "Edit Monster",
+  "editPartyTitle": "Edit Party",
+  "characterCount": "{count, plural, one {{count} adventurer} other {{count} adventurers}}",
+  "@characterCount": {
+    "description": "Displays the number of characters with plural formatting",
+    "placeholders": {
+      "count": {}
+    }
+  }
+}

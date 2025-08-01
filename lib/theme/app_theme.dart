@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
+import 'package:simple_init_tracker/ui/animations/cool_page_transition.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
@@ -101,6 +102,12 @@ class AppTheme {
       ),
       elevation: 0,
       foregroundColor: AppColors.textPrimary,
+    ),
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: ElegantPageTransitionBuilder(),
+        TargetPlatform.iOS: ElegantPageTransitionBuilder(),
+      },
     ),
   );
 }

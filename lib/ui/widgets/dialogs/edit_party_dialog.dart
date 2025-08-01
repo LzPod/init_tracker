@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
@@ -38,13 +39,13 @@ class _EditPartyDialogState extends State<EditPartyDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Edit Party',
+            Text(AppLocalizations.of(context).editPartyTitle,
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('New name',
+                Text(AppLocalizations.of(context).newName,
                     style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
@@ -56,7 +57,7 @@ class _EditPartyDialogState extends State<EditPartyDialog> {
                     controller: newPartyName,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Enter new name',
+                      hintText: AppLocalizations.of(context).newName,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -78,7 +79,7 @@ class _EditPartyDialogState extends State<EditPartyDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -95,22 +96,16 @@ class _EditPartyDialogState extends State<EditPartyDialog> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        if (newPartyName.text.isNotEmpty) {
-                          widget.onPartyUpdated(
-                            widget.party.copyWith(
-                              name: newPartyName.text.trim(),
-                            ),
-                          );
-                          Navigator.of(context).pop();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Party name cannot be empty.'),
-                            ),
-                          );
-                        }
+                        widget.onPartyUpdated(
+                          widget.party.copyWith(
+                            name: newPartyName.text.trim().isEmpty
+                                ? widget.party.name
+                                : newPartyName.text.trim(),
+                          ),
+                        );
+                        Navigator.of(context).pop();
                       },
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

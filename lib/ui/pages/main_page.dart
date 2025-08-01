@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:simple_init_tracker/core/providers/initiative_provider.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 import 'package:simple_init_tracker/ui/animations/animated_fab.dart';
 import 'package:simple_init_tracker/ui/pages/monsters_page.dart';
@@ -19,8 +20,8 @@ class MainPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: Theme.of(context).iconTheme,
-        title: Text('Initiative Tracker',
-            style: Theme.of(context).textTheme.headlineLarge),
+        title: Text(AppLocalizations.of(context).appTitle,
+            style: Theme.of(context).textTheme.headlineMedium),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
@@ -42,7 +43,7 @@ class MainPage extends ConsumerWidget {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(color: AppColors.onPopupBackground),
-              child: Text('Initiative Tracker',
+              child: Text(AppLocalizations.of(context).appTitle,
                   style: Theme.of(context).textTheme.headlineMedium),
             ),
             ListTile(
@@ -58,7 +59,7 @@ class MainPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              title: Text('Adventurers',
+              title: Text(AppLocalizations.of(context).partiesTitle,
                   style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {
                 Navigator.push(
@@ -82,7 +83,7 @@ class MainPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              title: Text('Monsters',
+              title: Text(AppLocalizations.of(context).monstersTitle,
                   style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {
                 Navigator.push(
@@ -102,7 +103,7 @@ class MainPage extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              title: Text('Settings',
+              title: Text(AppLocalizations.of(context).settingsTitle,
                   style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {},
             ),
@@ -115,7 +116,7 @@ class MainPage extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              title: Text('About',
+              title: Text(AppLocalizations.of(context).aboutTitle,
                   style: Theme.of(context).textTheme.headlineSmall),
               onTap: () {},
             ),

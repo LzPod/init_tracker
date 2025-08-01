@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/interface/initiative_entity.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
@@ -38,13 +39,13 @@ class _EditInitiativeDialogState extends State<EditInitiativeDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Edit Initiative',
+            Text(AppLocalizations.of(context).editInitiativeTitle,
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('New initiative',
+                Text(AppLocalizations.of(context).newInitiative,
                     style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
@@ -56,7 +57,7 @@ class _EditInitiativeDialogState extends State<EditInitiativeDialog> {
                     controller: newInitiative,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Enter new initiative',
+                      hintText: AppLocalizations.of(context).newInitiative,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -78,7 +79,7 @@ class _EditInitiativeDialogState extends State<EditInitiativeDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -102,14 +103,14 @@ class _EditInitiativeDialogState extends State<EditInitiativeDialog> {
                           Navigator.of(context).pop();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text('Initiative value cannot be empty.'),
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)
+                                  .invalidInitiativeError),
                             ),
                           );
                         }
                       },
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

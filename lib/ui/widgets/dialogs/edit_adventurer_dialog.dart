@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/character.dart';
 import 'package:simple_init_tracker/theme/colors.dart';
 
@@ -42,13 +43,13 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Edit Adventurer',
+            Text(AppLocalizations.of(context).editAdventurerTitle,
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 24),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('New name',
+                Text(AppLocalizations.of(context).newName,
                     style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 8),
                 Container(
@@ -60,7 +61,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                     controller: newAdventurerName,
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(
-                      hintText: 'Enter new name',
+                      hintText: AppLocalizations.of(context).newName,
                       hintStyle:
                           Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white54,
@@ -82,7 +83,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hit points',
+                        AppLocalizations.of(context).hitPoints,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       const SizedBox(height: 8),
@@ -98,7 +99,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                           style: Theme.of(context).textTheme.bodyLarge,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: 'Hit points',
+                            hintText: AppLocalizations.of(context).hitPoints,
                             hintStyle:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
@@ -119,7 +120,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Armor Class',
+                      Text(AppLocalizations.of(context).armorClass,
                           style: Theme.of(context).textTheme.labelMedium),
                       const SizedBox(height: 8),
                       Container(
@@ -134,7 +135,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                           style: Theme.of(context).textTheme.bodyLarge,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: 'Armor class',
+                            hintText: AppLocalizations.of(context).armorClass,
                             hintStyle:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
                                       color: Colors.white54,
@@ -159,7 +160,7 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context).cancel,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -176,27 +177,22 @@ class _EditAdventurerDialogState extends State<EditAdventurerDialog> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        if (newAdventurerName.text.isNotEmpty) {
-                          widget.onAdventurerUpdated(
-                            Character(
-                              id: widget.adventurer.id,
-                              name: newAdventurerName.text.trim(),
-                              hitPoints:
-                                  int.tryParse(newHitPoints.text.trim()) ?? 0,
-                              armorClass:
-                                  int.tryParse(newArmorClass.text.trim()) ?? 10,
-                            ),
-                          );
-                          Navigator.of(context).pop();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Adventurer name cannot be empty.'),
-                            ),
-                          );
-                        }
+                        widget.onAdventurerUpdated(
+                          Character(
+                            id: widget.adventurer.id,
+                            name: newAdventurerName.text.trim().isEmpty
+                                ? widget.adventurer.name
+                                : newAdventurerName.text.trim(),
+                            hitPoints: int.tryParse(newHitPoints.text.trim()) ??
+                                widget.adventurer.hitPoints,
+                            armorClass:
+                                int.tryParse(newArmorClass.text.trim()) ??
+                                    widget.adventurer.armorClass,
+                          ),
+                        );
+                        Navigator.of(context).pop();
                       },
-                      child: Text('Confirm',
+                      child: Text(AppLocalizations.of(context).confirm,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                   ),

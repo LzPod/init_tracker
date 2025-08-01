@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:simple_init_tracker/core/providers/party_provider.dart';
+import 'package:simple_init_tracker/l10n/gen_l10n/app_localizations.dart';
 import 'package:simple_init_tracker/models/party.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/add_party_dialog.dart';
 import 'package:simple_init_tracker/ui/widgets/dialogs/edit_party_dialog.dart';
@@ -43,7 +44,7 @@ class PartiesPage extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
         iconTheme: Theme.of(context).iconTheme,
         title: Text(
-          'Parties',
+          AppLocalizations.of(context).partiesPageTitle,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
